@@ -9,6 +9,9 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.io.springboot.app.multicampaign.MultiCampaignData;
+import com.io.springboot.app.multicampaign.MultiCampaignRepository;
+
 /**
  * Service class AdCampaignService Provides methods for fetching and persisting
  * campaign data
@@ -22,6 +25,9 @@ public class AdCampaignService {
 
 	@Autowired
 	private AdCampaignRepository acRepo;
+	
+	@Autowired
+	private MultiCampaignRepository mcRepo;
 	private static Logger logger = Logger.getLogger("AdCampaignService.class");
 
 	/**
@@ -61,6 +67,14 @@ public class AdCampaignService {
 		logger.info("Entering persistCampaignData  \n ");
 		acRepo.save(new PartnerData(data.getPartnerId(), LocalDateTime.now().plusSeconds(data.getDuration()),
 				data.getAdContent()));
+		
+		
+		mcRepo.save(
+				new MultiCampaignData(
+						data.getAdContent(),
+						LocalDateTime.now().plusSeconds(data.getDuration()),
+						data.getPartnerId()));
+		
 		logger.info("Exiting persistCampaignData  \n ");
 	}
 

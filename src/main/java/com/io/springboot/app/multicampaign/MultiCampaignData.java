@@ -69,6 +69,15 @@ public class MultiCampaignData implements Serializable  {
 	public void setDuration(LocalDateTime expiryTime) {
 		this.expiryTime = expiryTime;
 	}
+	
+
+	public PartnerData getPartnerData() {
+		return partnerData;
+	}
+
+	public void setPartnerData(PartnerData partnerData) {
+		this.partnerData = partnerData;
+	}
 
 	@Override
 	public String toString() {

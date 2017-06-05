@@ -60,6 +60,7 @@ public class AdCampaignControllerTests {
 		given(this.mockAdService.getAllCampaignData()).willReturn(allCampaignData);
 
 		Assert.assertEquals(this.adCampaignController.allCampaigns(response), allCampaignData);
+		Assert.assertEquals(response.toString(), 200, response.getStatus());
 		
 	}
 	
@@ -71,6 +72,7 @@ public class AdCampaignControllerTests {
 		String partnerId = "TestPartner1";
 		given(this.mockAdService.getCampaignData(partnerId)).willReturn(savedCampaignData);
 		Assert.assertNotNull(this.adCampaignController.getCampaignData(partnerId, response));
+		Assert.assertEquals(response.toString(), 200, response.getStatus());
 	}
 	
 	@Test
@@ -82,6 +84,7 @@ public class AdCampaignControllerTests {
 		given(this.mockAdService.getCampaignData(partnerId)).willReturn(savedCampaignData);
 		exception.expect(IllegalArgumentException.class);
 		this.adCampaignController.getCampaignData(partnerId, response);
+		Assert.assertEquals(response.toString(), 400, response.getStatus());
 	}
 	
 	@Test
@@ -91,6 +94,7 @@ public class AdCampaignControllerTests {
 		given(this.mockAdService.getCampaignData(partnerId)).willReturn(null);
 		exception.expect(NullPointerException.class);
 		this.adCampaignController.getCampaignData(partnerId, response);
+		Assert.assertEquals(response.toString(), 404, response.getStatus());
 	}
 	
 	@Test 
@@ -99,6 +103,7 @@ public class AdCampaignControllerTests {
 		CampaignData data = new CampaignData();
 		given(this.mockAdService.getCampaignData(partnerId)).willReturn(null);
 		this.adCampaignController.persistCampaignData(data, response);
+		Assert.assertEquals(response.toString(), 200, response.getStatus());
 	}
 	
 	@Test 
@@ -110,6 +115,7 @@ public class AdCampaignControllerTests {
 		given(this.mockAdService.getCampaignData(partnerId)).willReturn(savedCampaignData);
 		exception.expect(IllegalArgumentException.class);
 		this.adCampaignController.persistCampaignData(data, response);
+		Assert.assertEquals(response.toString(), 200, response.getStatus());
 	}
 	
 }

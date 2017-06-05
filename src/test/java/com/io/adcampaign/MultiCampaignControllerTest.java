@@ -21,6 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.io.springboot.app.AdCampaignDemoApplication;
+import com.io.springboot.app.adcampaign.PartnerData;
 import com.io.springboot.app.multicampaign.MultiCampaignController;
 import com.io.springboot.app.multicampaign.MultiCampaignData;
 import com.io.springboot.app.multicampaign.MultiCampaignInfo;
@@ -56,12 +57,17 @@ public class MultiCampaignControllerTest {
 		
 		List<MultiCampaignData> mcData = new ArrayList<MultiCampaignData>();
 		MultiCampaignData data1 = new MultiCampaignData();
+		String partnerId = "TestPartner1";
 		data1.setAdContent("TestString1");
 		data1.setCampaignId(13221232);
 		data1.setDuration(LocalDateTime.now().plusSeconds(500));
-		String partnerId = "TestPartner1";
+		data1.setPartnerData(new PartnerData(partnerId, LocalDateTime.now( ), ""));
+		mcData.add(data1);
+		
 		given(this.mockService.getAllCampaignData(partnerId)).willReturn(mcData);
-		Assert.assertEquals(this.mcController.getCampaignData(partnerId,response),mcData );
+		
+		Assert.assertNotNull(this.mcController.getCampaignData(partnerId,response) );
+		Assert.assertEquals(response.toString(), 200, response.getStatus());
 	}
 	
 	@Test
@@ -71,6 +77,7 @@ public class MultiCampaignControllerTest {
 		info.setAdContent("TestAdContent1");
 		info.setDuration(100);
 		this.mcController.persistCampaignData(info, "TestString1",response);
+		Assert.assertEquals(response.toString(), 200, response.getStatus());
 		
 	}
 	
